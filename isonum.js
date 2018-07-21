@@ -25,25 +25,25 @@ function getIsonum(n) {
     return 10;
   }
 
-  const numberMap = {};
+  const numberMap = {}; // Map normal number to its minimal isomorphic number
   const result = [];
-  let isomorphPart = 1;
+  let isomorphNum = 1; // First minimal isomrphic number
   let hasSkippedTwo = false;
 
   n.forEach(number => {
-    // If there weren't such digits yet
+    // If there is no such isomorph number yet
     if (numberMap[number] === undefined) {
       // Need this extra check, because 0 can't be a leading number, but should go right after 1 (1, 0 2)
       // That's why first time we put 0, after that we can put 2, 3, etc.
       // Once we have put that number, we add it to the cache (numberMap)
-      if (isomorphPart === 2 && !hasSkippedTwo) {
+      if (isomorphNum === 2 && !hasSkippedTwo) {
         numberMap[number] = 0;
         result.push([number, 0]);
         hasSkippedTwo = true;
       } else {
-        numberMap[number] = isomorphPart;
-        result.push([number, isomorphPart]);
-        isomorphPart++;
+        numberMap[number] = isomorphNum;
+        result.push([number, isomorphNum]);
+        isomorphNum++;
       }
     } else {
       // If this number has been there already, we simply put if from the cache.
